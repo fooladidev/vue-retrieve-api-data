@@ -1,0 +1,12 @@
+    body{
+      direction: rtl;   
+    }
+    #loading{
+      position: absolute;
+      top: 280px;
+      left: 42%;
+      background-color: #ff756e;
+      border-radius: 5px;
+      font-size: 50px;
+      padding: 5px 7px;
+    }
