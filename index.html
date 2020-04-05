@@ -1,0 +1,87 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container app">
+      <div id="loading" v-if="loading">...loading
+
+      </div>
+      <div v-else>
+        <div v-for="item in data">
+          <h2 style="text-align: right;margin: 30px 0px;">{{item.course}}</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">question</th>
+                <th scope="col">answer</th>
+                <th scope="col">count</th>
+                <th scope="col">coeff</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item1 in item.scores">
+                <th scope="row">{{item1["question"]}}</th>
+                <td>{{item1["answer"]}}</td>
+                <td>{{item1["count"]}}</td>
+                <td>{{item1["coeff"]}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    
+    new Vue({
+      el: ".app",
+      data: {
+        loading: true,
+        data:[],
+
+      },
+      methods: {
+        getdata:function(){
+          var th =this ;
+          axios.get("http://cse-shirazu.ir/api/v1/qualification/result/cse-gradery/74").then(function(response){
+            th.data=response.data;
+            th.loading=false;
+
+          });
+
+        }
+
+      },
+      mounted:function() {
+        this.getdata();
+        
+      },
+    });
+  </script>
+  <style>
+    body{
+      direction: rtl;   
+    }
+    
+    #loading{
+      position: absolute;
+      top: 280px;
+      left: 42%;
+      background-color: #ff756e;
+      border-radius: 5px;
+      font-size: 50px;
+      padding: 5px 7px;
+    }
+  </style>
+</html>
